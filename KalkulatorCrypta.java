@@ -1,3 +1,6 @@
+//Kalkulator Cryptarithm ini masih 70%, dan merupakan 1/3 dari keseluruhan project sehingga masih akan terjadi perubahan
+//sampai batas akhir waktu pengumpulan
+
 import java.util.Scanner;
 
 public class KalkulatorCrypta {

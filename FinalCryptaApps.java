@@ -1,3 +1,5 @@
+//Progres Program Masih 85%, Masih terdapat bug dan part soal yang belum selesai.
+
 import java.util.Scanner;
 import java.lang.Thread;
 

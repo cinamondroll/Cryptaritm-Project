@@ -1,5 +1,4 @@
-//Progres Program Masih 85%, Masih terdapat bug dan part soal yang belum selesai.
-
+//FInal Rev
 import java.util.Scanner;
 import java.lang.Thread;
 
@@ -10,7 +9,7 @@ public class FinalCryptaApps {
     static String jawaban = ""; //Game
     static int batasAwal;       //Game
     static int batasAkhir;      //Game
-    static boolean[] penggunaanDigit = new boolean[10];     //Kalkulator
+    static boolean[] penggunaanDigit = new boolean[15];     //Kalkulator
     static char[] varHuruf = new char[15];                  //Kalkulator
     static int[] nilaiHuruf = new int[15];                  //Kalkulator      
     static int banyakVarHuruf = 0;                          //Kalkulator
@@ -53,7 +52,14 @@ public class FinalCryptaApps {
         { "      AB\n    - CA\n    =  D", "A, B, C, D", "3,1,2,8", "A = 3", "1" },
         { "      AA\n    - AB\n    =  B", "A, B", "1,2", "B = 1", "1" },
         { "      AA\n    - BB\n    = BB", "A, B", "2,1", "A = 2", "1" },
-        
+        { "      AA\n    - BC\n    = CB", "A, B, C", "3,1,2", "A = 3", "1" },
+        { "      AB\n    - BC\n    = DA", "A, B, C, D", "4,2,8,1", "C = 8", "1" },
+        { "      ADA\n    +  DI\n    = DIA", "A, D, I", "4,5,0", "A = 4", "2" },
+        { "       II\n    +  II\n    = HIU", "I, H, U", "9,1,8", "H = 1", "2" },
+        { "       AB\n    +  AB\n    = BCC", "A, B, C", "6,1,2", "C = 2", "2" },
+        { "      ARA\n    + ABA\n    = BAR", "A, B, R", "3,7,6", "A = 3", "2" },
+        { "      AKU\n    + KAU\n    = UUD", "A, K, U, D", "1,2,3,6", "D = 6", "2" },
+        { "       MATH\n    +  MATH\n    = HABIT", "M, A, T, H, B, I", "7,5,2,1,0,4", "M = 7", "3" },
     };
     
     /**
@@ -61,7 +67,7 @@ public class FinalCryptaApps {
      * Metode ini digunakan untuk mengecek jawaban pemain apakah benar atau salah
      * 
      * Metode ini akan memeriksa apakah ada elemen false di dalam array 
-     * {@code toCheckValue}. Jika ditemukan, metode ini akan mengembalikan {@code true}, 
+     * {@code toCheckValue}. Jika ditemukan, metode ini akan mengembalikan {@code yue}, 
      * jika tidak, akan mengembalikan {@code false}.
      *
      * @param arr Array boolean yang akan diperiksa, berisi jawaban dari pemain.
@@ -134,6 +140,15 @@ public class FinalCryptaApps {
                 System.out.printf("||                     HITN : %S                          ||\n", puzzles[i][3]);
                 System.out.println("|| Setelah Memilih HINT tidak ada kesempatan untuk skip/exit ||");
                 System.out.println("||===========================================================||");
+                for (int j = 0; j < subSoal.length; j++) {
+                    System.out.printf("|| Masukkan nilai %s: ", subSoal[j]);
+                    jawaban[j] = user.nextLine();
+                    if (jawaban[j].equals(jawabanBenar[j])) {
+                        cek[j] = true;
+                    } else {
+                        cek[j] = false;
+                    }
+                }
 
             } else if (respon.equals("ya")){
                 for (int j = 0; j < subSoal.length; j++) {
@@ -164,11 +179,22 @@ public class FinalCryptaApps {
                     ||                      JAWABAN  BENAR                       ||
                     ||===========================================================||"""
                 );
-                score += 10;
-                
+                if (puzzles[i][4].equals("1")){
+                    score += 10;
+                }else if(puzzles[i][4].equals("2")){
+                    score += 20;
+                }else if(puzzles[i][4].equals("3")){
+                    score += 33;
+                }   
             }
+            
             System.out.printf("||===== Sisa Lives Anda %d ==== || ====== Score Anda %d ======||\n", lives, score);
-            System.out.println("||===========================================================||\n\n");
+            System.out.println("||===========================================================||");
+            if (i == batasAkhir){
+                System.out.print("|| Game selesai");
+                delay();
+            }
+            System.out.print("|| Loading soal berikutnya");
             delay();
         }
     }
@@ -183,6 +209,8 @@ public class FinalCryptaApps {
      * - Jika skor lebih dari atau sama dengan 50, umpan baliknya "Luar biasa! Anda sangat pandai!".
      * - Jika skor lebih dari atau sama dengan 30 tetapi kurang dari 50, umpan baliknya "Bagus! Anda cukup mahir!".
      * - Jika skor kurang dari 30, umpan baliknya "Jangan menyerah, coba lagi!".
+     * 
+     * Setelah Game over, Score dan lives akan direset.
      */
     static void gameOver() {
         System.out.println(
@@ -191,15 +219,20 @@ public class FinalCryptaApps {
                     ||                         GAME OVER                         ||
                     ||===========================================================||""");
         System.out.printf("|| Score akhir Anda: %d                                      ||\n", score);
-        if (score >= 50) {
+        if (score >= 80) {
             System.out.println("|| Luar biasa! Anda sangat pandai!                           ||");
-        } else if (score >= 30) {
+        } else if (score >= 30 && score < 80) {
             System.out.println("|| Bagus! Anda cukup mahir!                                  ||");
         } else {
             System.out.println("|| Jangan menyerah, coba lagi!                               ||");
         }
         System.out.println("||===========================================================||\n\n");
+
+        //reset score dan lives 
+        score = 0;    
+        lives = 3;
     }
+    
 
     /**
      * METHOD GAME CRYPTA
@@ -238,18 +271,27 @@ public class FinalCryptaApps {
         
             if (Levelgame == 1) {
                 batasAwal = 0;
-                batasAkhir = 10;
+                batasAkhir = 9;
                 printSoal(batasAwal, batasAkhir);
+                gameOver();
+                System.out.print("|| Exit game");
+                delay();
         
             } else if (Levelgame == 2) {
                 batasAwal = 10;
-                batasAkhir = 15;
+                batasAkhir = 14;
                 printSoal(batasAwal, batasAkhir);
+                gameOver();
+                System.out.print("|| Exit game");
+                delay();
         
             } else if (Levelgame == 3) {
                 batasAwal = 15;
-                batasAkhir = 18;
+                batasAkhir = 17;
                 printSoal(batasAwal, batasAkhir);
+                gameOver();
+                System.out.print("|| Exit game");
+                delay();
         
             } else if (Levelgame == 4) {
                 System.out.println(
@@ -261,16 +303,25 @@ public class FinalCryptaApps {
                     ||===========================================================||""");
                 System.out.print("|| ");
                 int choice = user.nextInt();
-                if (choice == 1) {
-                    break;  // Keluar dari loop
-                } else {
-                    continue;  // Kembali ke awal loop
+                while (choice <= 0 || choice > 2) {
+                    System.out.println("|| PILIHAN TIDAK VALID                                       ||");
+                    System.out.print("|| ");
+                    choice = user.nextInt();
+                    user.nextLine();
                 }
+
+                if (choice == 1) {
+                    main(null);
+                }
+
+                continue;
+                
             } else {
                 System.out.println("|| PILIHAN TIDAK VALID                                       ||");
             }
         }
         gameOver(); // Memanggil gameOver setelah keluar dari loop
+        
     }
 
     /**
@@ -413,7 +464,7 @@ public class FinalCryptaApps {
         System.out.println("||                                                           ||");
         System.out.println("|| Nilai setiap huruf adalah:                                ||");
         for (int i = 0; i < banyakVarHuruf; i++) {
-            System.out.printf("|| %-3s = %-3d                                               ||\n", varHuruf[i], nilaiHuruf[i]);
+            System.out.printf("|| %-3s = %-3d                                                 ||\n", varHuruf[i], nilaiHuruf[i]);
         }
         System.out.println("||                                                           ||");
     }
@@ -497,19 +548,24 @@ public class FinalCryptaApps {
         String kata1, kata2, kataHasil, operator;
 
         while (true) {
+            //reset kalkulator
+            penggunaanDigit = new boolean[15];     
+            varHuruf = new char[15];                  
+            nilaiHuruf = new int[15];                       
+            banyakVarHuruf = 0;     
             
             do {
                 System.out.println(
                     """
                     ||===========================================================||
-                    ||       SILAHKAN user SESUAI DENGAN PERINTAH SISTEM        ||
+                    ||       SILAHKAN INPUT SESUAI DENGAN PERINTAH SISTEM        ||
                     ||===========================================================||"""
                 );
                 System.out.print("\n|| Masukkan kata pertama :");
                 kata1 = user.nextLine().toUpperCase();
 
                 while ((!(validasiKata(kata1)))) {
-                    System.out.println("\n|| HEY HEYY user YANG BENER");
+                    System.out.println("\n|| HEY HEYY INPUT YANG BENER");
                     System.out.print("\n|| Masukkan kata pertama :");
                     kata1 = user.nextLine().toUpperCase();
                 }
@@ -518,7 +574,7 @@ public class FinalCryptaApps {
                 kata2 = user.nextLine().toUpperCase();
 
                 while ((!(validasiKata(kata2)))) {
-                    System.out.println("\n|| HEY HEYY user YANG BENER");
+                    System.out.println("\n|| HEY HEYY INPUT YANG BENER");
                     System.out.print("\n|| Masukkan kata kedua :");
                     kata2 = user.nextLine().toUpperCase();
                 }
@@ -528,7 +584,7 @@ public class FinalCryptaApps {
 
                     while (!(operator.equals("+") || operator.equals("-") || operator.equals("x"))) {
                         System.out.println("\n|| Operator macam apa itu?? Ga kenal aku :(\n|| ");
-                        System.out.println("|| user YANG BENER!!");
+                        System.out.println("|| INPUT YANG BENER!!");
                         System.out.print("\n|| Masukkan operator (+ atau - atau x):");
                         operator = user.nextLine();
                     }
@@ -536,14 +592,14 @@ public class FinalCryptaApps {
                 System.out.print("\n|| Masukkan kata hasil :");
                 kataHasil = user.nextLine().toUpperCase();
                 while ((!(validasiKata(kataHasil)))) {
-                    System.out.println("\n|| HEY HEYY user YANG BENER");
+                    System.out.println("\n|| HEY HEYY INPUT YANG BENER");
                     System.out.print("\n|| Masukkan kata hasil :");
                     kataHasil = user.nextLine().toUpperCase();
                 }
                 
                 if (!validasiuser(kata1, kata2, kataHasil)) {
                     System.out.println("||===========================================================||");
-                    System.out.println("\n|| WADUH.. VARIABELNYA KEBANYAKAN :( user soal lain ya..    ||");
+                    System.out.println("\n|| WADUH.. VARIABELNYA KEBANYAKAN :( input soal lain ya..    ||");
                 }
                 
             } while (!validasiuser(kata1, kata2, kataHasil));
@@ -553,7 +609,7 @@ public class FinalCryptaApps {
             System.out.println("||   " + kata1);
             System.out.println("|| "+ operator + " " + kata2);
             System.out.println("|| = " + kataHasil);
-            System.out.println("|| Bot Sedang Berpikir...\n||");
+            System.out.print("|| Bot Sedang Berpikir");
             delay();
 
             temukanVarHuruf(kata1 + kata2 + kataHasil);
@@ -586,8 +642,9 @@ public class FinalCryptaApps {
                 user.nextLine();
             }
 
-            if (pilihan == 1){
+            if (pilihan == 1){        
                 continue;
+
             } else{
                 System.out.println(
                     """
@@ -637,12 +694,14 @@ public class FinalCryptaApps {
 
             System.out.print("|| ");
             pilihan = user.nextInt();
+            user.nextLine();
 
             while (pilihan <= 0 || pilihan > 3) {
             System.out.println("|| PILIHAN TIDAK VALID                                       ||");
             System.out.println("|| Masukkan Pilihan Yang Benar                               || ");
             System.out.print("|| ");
             pilihan = user.nextInt();
+            user.nextLine();
             }
 
             if (pilihan == 1) {
@@ -676,10 +735,9 @@ public class FinalCryptaApps {
 
                 if (choice == 1) {
                     GameRun();
-                    continue;
-                } else {
-                    continue;
                 }
+
+                continue;
 
             } else if (pilihan == 2) {
                 System.out.println(
@@ -718,13 +776,12 @@ public class FinalCryptaApps {
 
                 if (choice == 1) {
                     kalkulatorRun();
-                    continue;
-                } else {
-                    continue;
-                } 
+                }
+
+                continue;
 
             } else if (pilihan == 3) {
-                user.nextLine();
+                //user.nextLine();
                 System.out.print(
                     """
                     ||===========================================================||
@@ -733,6 +790,7 @@ public class FinalCryptaApps {
             
                     Mengakhiri Program""");
                 delay();
+                System.exit(0);
                 break;
             }   
         

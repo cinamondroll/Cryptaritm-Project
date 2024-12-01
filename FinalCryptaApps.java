@@ -1,4 +1,4 @@
-//Final
+//FInal
 import java.util.Scanner;
 import java.lang.Thread;
 
@@ -60,6 +60,8 @@ public class FinalCryptaApps {
         { "      ARA\n    + ABA\n    = BAR", "A, B, R", "3,7,6", "A = 3", "2" },
         { "      AKU\n    + KAU\n    = UUD", "A, K, U, D", "1,2,3,6", "D = 6", "2" },
         { "       MATH\n    +  MATH\n    = HABIT", "M, A, T, H, B, I", "7,5,2,1,0,4", "M = 7", "3" },
+        { "       SEND\n    +  MORE\n    = MONEY", "S, E, N, D, M, O, R, Y", "9,5,6,7,1,0,8,2", "M = 1", "3" },
+        { "       CROSS\n    +  ROADS\n    = DANGER", "C, R, O, S, A, D, N, G, E", "9,6,7,2,4,1,8,3,5", "C = 9", "3" },
 
     };
     
@@ -315,7 +317,7 @@ public class FinalCryptaApps {
 
                 continue;  
             }
-             
+
             gameOver();
             System.out.print("|| Exit game");
             delay();

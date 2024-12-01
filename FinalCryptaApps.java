@@ -60,7 +60,7 @@ public class FinalCryptaApps {
         { "      ARA\n    + ABA\n    = BAR", "A, B, R", "3,7,6", "A = 3", "2" },
         { "      AKU\n    + KAU\n    = UUD", "A, K, U, D", "1,2,3,6", "D = 6", "2" },
         { "       MATH\n    +  MATH\n    = HABIT", "M, A, T, H, B, I", "7,5,2,1,0,4", "M = 7", "3" },
-        
+
     };
     
     /**
@@ -313,9 +313,9 @@ public class FinalCryptaApps {
                     main(null);
                 }
 
-                continue;
-                
-            } 
+                continue;  
+            }
+             
             gameOver();
             System.out.print("|| Exit game");
             delay();

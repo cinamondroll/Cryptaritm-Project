@@ -1,4 +1,4 @@
-//FInal Rev
+//Final
 import java.util.Scanner;
 import java.lang.Thread;
 
@@ -60,6 +60,7 @@ public class FinalCryptaApps {
         { "      ARA\n    + ABA\n    = BAR", "A, B, R", "3,7,6", "A = 3", "2" },
         { "      AKU\n    + KAU\n    = UUD", "A, K, U, D", "1,2,3,6", "D = 6", "2" },
         { "       MATH\n    +  MATH\n    = HABIT", "M, A, T, H, B, I", "7,5,2,1,0,4", "M = 7", "3" },
+        
     };
     
     /**
@@ -268,30 +269,28 @@ public class FinalCryptaApps {
             System.out.print("|| Pilih angka 1-4: ");
             int Levelgame = user.nextInt();
             user.nextLine();
+
+            while (Levelgame <= 0 || Levelgame > 4) {
+                System.out.println("|| PILIHAN TIDAK VALID                                       ||");
+                System.out.print("|| ");
+                Levelgame = user.nextInt();
+                user.nextLine();
+            }
         
             if (Levelgame == 1) {
                 batasAwal = 0;
                 batasAkhir = 9;
                 printSoal(batasAwal, batasAkhir);
-                gameOver();
-                System.out.print("|| Exit game");
-                delay();
         
             } else if (Levelgame == 2) {
                 batasAwal = 10;
                 batasAkhir = 14;
                 printSoal(batasAwal, batasAkhir);
-                gameOver();
-                System.out.print("|| Exit game");
-                delay();
         
             } else if (Levelgame == 3) {
                 batasAwal = 15;
                 batasAkhir = 17;
                 printSoal(batasAwal, batasAkhir);
-                gameOver();
-                System.out.print("|| Exit game");
-                delay();
         
             } else if (Levelgame == 4) {
                 System.out.println(
@@ -316,9 +315,11 @@ public class FinalCryptaApps {
 
                 continue;
                 
-            } else {
-                System.out.println("|| PILIHAN TIDAK VALID                                       ||");
-            }
+            } 
+            gameOver();
+            System.out.print("|| Exit game");
+            delay();
+            
         }
         gameOver(); // Memanggil gameOver setelah keluar dari loop
         
